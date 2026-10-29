@@ -1,0 +1,6 @@
+data/
+*.parquet
+*.pbf
+*.pmtiles
+.venv/
+__pycache__/
