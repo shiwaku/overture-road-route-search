@@ -19,12 +19,12 @@ Overture Maps の道路データ（transportation の `segment` / `connector`）
 
 | 項目 | 決定 |
 |---|---|
-| 対象範囲 | 日本全域（日本を囲む四角形で取ったあと、Overture `divisions` の日本の境界で切り抜く。四角形には韓国の南東部・サハリン・千島列島も入るため） |
+| 対象範囲 | まず日本全域で検証し、のちに全球へ広げる（2026-10-29 決定。スクリプトは範囲を引数で変えられるように作り、日本に固有の決めごとは分けておく）。日本全域は（日本を囲む四角形で取ったあと、Overture `divisions` の日本の境界で切り抜く。四角形には韓国の南東部・サハリン・千島列島も入るため） |
 | Overture の版 | `2026-10-21.0`（最新版で固定。途中で変えない） |
 | 移動手段 | 車・徒歩・自転車の 3 つ（それぞれ別のネットワークにする） |
 | 網羅率の比較先 | 道路統計年報（国交省）＋国土数値情報 N13 |
 | エンジン | 5 つ（pgRouting・SciPy・OSRM・GraphHopper・Valhalla）とも全国で前処理を試す。同じ経路になるかの比較は狭い範囲で行う（東京 23 区など・KSJ 版と同じ） |
-| 管理 | git（ローカルのみ） |
+| 管理 | git。GitHub の非公開リポジトリ shiwaku/overture-route-search（2026-10-29 作成。最終的に公開する予定） |
 
 ## 日本範囲の件数（2026-10-21.0・四角形 東経 122〜154°・北緯 20〜46°・切り抜き前）
 
@@ -34,6 +34,8 @@ Overture Maps の道路データ（transportation の `segment` / `connector`）
 | うち車が通れる種類（motorway〜living_street・service・unclassified） | 約 1,360 万 |
 | うち徒歩・自転車向け（footway・path・steps・cycleway・pedestrian・bridleway） | 約 185 万 |
 | track（農道・林道など） | 約 101 万 |
+
+全球（2026-10-21.0）は segment 3.53 億件（72 GB）・connector 4.24 億件（25 GB）。日本の四角形の約 21 倍。
 
 全国では GeoJSON → `ogr2ogr`（overture-to-pgr の手順）は重すぎるので、DuckDB で GeoParquet を直接取ってくる。
 
