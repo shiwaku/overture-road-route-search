@@ -5,7 +5,7 @@ Route Search API（FastAPI）— Overture の道路ネットワークでの到�
 読むネットワークは環境変数 ROUTE_CASE（jp・world。既定は jp）。
 
   uv run uvicorn api.main:app --port 8000
-  ROUTE_CASE=world uv run uvicorn api.main:app --port 8000
+  ROUTE_CASE=world uv run uvicorn api.main:app --port 8010
 """
 
 import asyncio
@@ -38,7 +38,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title='Overture Route Search API', version='0.1', lifespan=lifespan,
+app = FastAPI(title='Overture Road Route Search API', version='0.1', lifespan=lifespan,
               description='Overture の道路ネットワークでの到達圏・経路探索')
 app.add_middleware(GZipMiddleware, minimum_size=500, compresslevel=1)
 app.add_middleware(CORSMiddleware, allow_origins=['http://localhost:5173'],
