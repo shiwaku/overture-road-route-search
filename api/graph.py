@@ -12,6 +12,14 @@
 - 到達圏は全リンクを走査せず、到達したノードにつながるリンクだけを見る（全球では全リンクの走査だけで重い）
 - 重みは分（time）とメートル（dist）の float64（scipy は float64 以外だと探索のたびに全体を写す）
 
+【速度は 2 通り】（speed）
+- posted: links.parquet の所要時間そのまま（制限速度があればその値、無ければ class ごとの既定値）
+- class: 制限速度を使わず、全リンクを class ごとの既定値（SPEED_KMH・SPEED_LINK_KMH）で走る。
+  制限速度の入り方は国でまちまちなので、都市どうしを同じ条件で比べるときに使う。通れる向きは posted と同じ
+- legal: 制限速度があればその値、無ければその国（州）の法定速度（scripts/14_legal_speeds.py が作る
+  network/<case>/legal_speeds.parquet）、それも無ければ class の既定値。データの抜けを法律の値で埋めたもの
+組み立て済みの配列は posted が network/<case>/graph、ほかは network/<case>/graph_<speed>。
+
 【link_id は links.parquet の行番号】（KSJ 版と同じ約束）
 links.parquet は node1 の順に並んでいる（scripts/09_build_network.py）。node_id は nodes.parquet の行番号。
 """
@@ -39,6 +47,10 @@ LINKS_HARD_MAX = 1_000_000
 # /route の探索上限の初期値 = 直線距離 km × これ ＋ 15 分。届かなければ倍にして ROUTE_LIMIT_TRIES 回まで試す（KSJ 版の値）
 ROUTE_MIN_PER_KM = {True: 1.4, False: 3.3}
 ROUTE_LIMIT_TRIES = 3
+# 制限速度が無い区間の速度 km/h（PLAN.md ②）。ランプは class ごとに別の値。scripts/09_build_network.py もこれを使う
+SPEED_KMH = {'motorway': 80, 'trunk': 50, 'primary': 40, 'secondary': 35, 'tertiary': 30}
+SPEED_LINK_KMH = {'motorway': 45, 'trunk': 30, 'primary': 30, 'secondary': 25, 'tertiary': 20}
+SPEEDS = ('posted', 'class', 'legal')
 
 PREBUILT_FORMAT = 1
 PREBUILT_ARRAYS = ('indices', 'indptr', 'starts', 'entry_link', 'w_time_exp', 'w_time_noexp', 'w_dist_exp',
@@ -91,8 +103,8 @@ def _parquet_paths(d):
     return d / 'links.parquet', d / 'nodes.parquet'
 
 
-def prebuilt_dir(d):
-    return d / 'graph'
+def prebuilt_dir(d, speed='posted'):
+    return d / ('graph' if speed == 'posted' else f'graph_{speed}')
 
 
 def _source_signature(d):
@@ -102,12 +114,13 @@ def _source_signature(d):
 class RoadGraph:
     """探索グラフ。起動時に 1 回作る。組み立て済みの配列（network/<case>/graph）があれば読むだけ"""
 
-    def __init__(self, case='jp', net_dir='network', prebuilt=True):
+    def __init__(self, case='jp', net_dir='network', prebuilt=True, speed='posted'):
         t0 = time.perf_counter()
+        assert speed in SPEEDS, speed
         d = BASE / net_dir / case
-        self.case = case
-        pre = prebuilt_dir(d)
-        if prebuilt and self._prebuilt_usable(pre, d):
+        self.case, self.speed = case, speed
+        pre = prebuilt_dir(d, speed)
+        if prebuilt and self._prebuilt_usable(pre, d, speed):
             self._load_prebuilt(pre)
             self.source = 'prebuilt'
         else:
@@ -122,7 +135,8 @@ class RoadGraph:
         link_path, node_path = _parquet_paths(d)
         import pyarrow.parquet as pq
         # class は辞書（カテゴリ）で読む。文字列のままだと全球の 7 千万本で数 GB になる
-        links = pq.read_table(link_path, columns=['node1', 'node2', 'dist_m', 'time_fwd_s', 'time_bwd_s', 'class'],
+        links = pq.read_table(link_path, columns=['node1', 'node2', 'dist_m', 'time_fwd_s', 'time_bwd_s', 'class', 'is_link',
+                                                       'speed_posted'],
                               read_dictionary=['class']).to_pandas()
         nodes = pd.read_parquet(node_path, columns=['lon', 'lat'])
         self.n_links, self.n_nodes = len(links), len(nodes)
@@ -138,6 +152,23 @@ class RoadGraph:
         self.link_dist = links['dist_m'].to_numpy().astype(np.float64)
         self.link_time_fwd = links['time_fwd_s'].to_numpy().astype(np.float64) / 60   # 分。NaN = 通れない
         self.link_time_bwd = links['time_bwd_s'].to_numpy().astype(np.float64) / 60
+        if self.speed in ('class', 'legal'):
+            # class: 制限速度を捨てて class の既定値で走る。legal: 制限速度が無いリンクだけ法定速度にする。
+            # 通れない向き（NaN）はそのまま
+            kmh = np.where(links['is_link'].to_numpy(), cls.map(SPEED_LINK_KMH).to_numpy(dtype=np.float64),
+                           cls.map(SPEED_KMH).to_numpy(dtype=np.float64))
+            if self.speed == 'legal':
+                legal = pq.read_table(d / 'legal_speeds.parquet', columns=['legal_kmh'])['legal_kmh'].to_numpy()
+                assert len(legal) == self.n_links, 'legal_speeds.parquet が links.parquet と合わない（14 を作り直す）'
+                use = ~links['speed_posted'].to_numpy() & np.isfinite(legal)
+                kmh = np.where(use, legal, kmh)
+            t = self.link_dist / (kmh / 3.6) / 60
+            if self.speed == 'legal':
+                posted = links['speed_posted'].to_numpy()
+                t = np.where(posted, np.fmin(self.link_time_fwd, self.link_time_bwd), t)   # 制限速度のあるリンクは元の時間
+            self.link_time_fwd = np.where(np.isfinite(self.link_time_fwd), t, np.nan)
+            self.link_time_bwd = np.where(np.isfinite(self.link_time_bwd), t, np.nan)
+            del kmh, t
         self.fwd = np.isfinite(self.link_time_fwd)
         self.bwd = np.isfinite(self.link_time_bwd)
 
@@ -212,17 +243,17 @@ class RoadGraph:
         out.mkdir(parents=True, exist_ok=True)
         for name, a in self._arrays().items():
             np.save(out / f'{name}.npy', np.ascontiguousarray(a))
-        meta = {'format': PREBUILT_FORMAT, 'case': self.case, 'n_links': self.n_links, 'n_nodes': self.n_nodes,
-                'source': self._source}
+        meta = {'format': PREBUILT_FORMAT, 'case': self.case, 'speed': self.speed, 'n_links': self.n_links,
+                'n_nodes': self.n_nodes, 'source': self._source}
         (out / 'meta.json').write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
 
     @staticmethod
-    def _prebuilt_usable(pre, d):
+    def _prebuilt_usable(pre, d, speed):
         meta_path = pre / 'meta.json'
         if not meta_path.exists():
             return False
         meta = json.loads(meta_path.read_text(encoding='utf-8'))
-        if meta.get('format') != PREBUILT_FORMAT:
+        if meta.get('format') != PREBUILT_FORMAT or meta.get('speed', 'posted') != speed:
             return False
         src = _source_signature(d)
         return not src or src == meta.get('source')
@@ -386,7 +417,7 @@ class RoadGraph:
 
     def health(self):
         return {
-            'case': self.case, 'links': self.n_links, 'nodes': self.n_nodes, 'snap_nodes': self.n_snap_nodes,
+            'case': self.case, 'speed': self.speed, 'links': self.n_links, 'nodes': self.n_nodes, 'snap_nodes': self.n_snap_nodes,
             'components': int(self.n_components), 'coordinates': int(len(self.coords)),
             'load_seconds': round(self.load_seconds, 2), 'graph_source': self.source,
         }

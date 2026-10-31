@@ -2,10 +2,11 @@
 Route Search API（FastAPI）— Overture の道路ネットワークでの到達圏・経路探索
 
 ../ksj-route-search-api の api/main.py から移植。エンドポイントの形は KSJ 版と同じ（/health /reachability /route）。
-読むネットワークは環境変数 ROUTE_CASE（jp・world。既定は jp）。
+読むネットワークは環境変数 ROUTE_CASE（jp・world。既定は jp）。速度は ROUTE_SPEED（posted・class。既定は posted。api/graph.py）。
 
-  uv run uvicorn api.main:app --port 8000
+  uv run uvicorn api.main:app --port 8010
   ROUTE_CASE=world uv run uvicorn api.main:app --port 8010
+  ROUTE_CASE=world ROUTE_SPEED=class uv run uvicorn api.main:app --port 8011
 """
 
 import asyncio
@@ -19,7 +20,7 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
-from api.core import CASE, check_latlon, graph, reachability_response, state
+from api.core import CASE, SPEED, check_latlon, graph, reachability_response, state
 from api.graph import RoadGraph
 
 
@@ -30,7 +31,7 @@ async def lifespan(app: FastAPI):
 
     def load():
         try:
-            state['graph'] = RoadGraph(CASE)
+            state['graph'] = RoadGraph(CASE, speed=SPEED)
         except Exception as e:
             state['error'] = repr(e)
         gc.collect()
