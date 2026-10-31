@@ -5,7 +5,7 @@
 
 - 道路は幹線だけ（motorway・trunk・primary・secondary・tertiary とそのランプ）。一方通行と制限速度を使う
 - 探索は scipy の Dijkstra（メモリ上の有向グラフ）。API は FastAPI、画面は SvelteKit ＋ MapLibre ＋ PMTiles
-- 仕組みは姉妹プロジェクト `ksj-route-search-api`（国土数値情報 N13 版・日本全国。非公開）から移植した。文書やコードのコメントにある `../ksj-route-search-api` はこのプロジェクトのこと
+- 仕組みは姉妹プロジェクト [ksj-route-search-api](https://github.com/shiwaku/ksj-route-search-api)（国土数値情報 N13 版・日本全国）から移植した。文書やコードのコメントにある `../ksj-route-search-api` はこのプロジェクトのこと
 - サービスとしては公開していない。手元の PC（64 GB）での検証まで
 
 全球のネットワークは 7,424 万リンク・6,788 万ノード・1,771 万 km。到達圏 120 分は 0.2〜0.5 秒、
