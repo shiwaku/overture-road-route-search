@@ -20,6 +20,7 @@
 | ファイル | 内容 |
 |---|---|
 | [PLAN.md](PLAN.md) | 進め方・決めたこと・段階ごとの状況・全球の検証結果 |
+| [docs/speed.md](docs/speed.md) | 速度と所要時間の仕様（制限速度・class の既定値・法定速度、3 通りの速度の使い分け） |
 | [docs/network_world.md](docs/network_world.md) | 全球版の道路ネットワークの概要（作り方・規模・class ごと・つながっている範囲・気をつけること） |
 | [docs/coverage.md](docs/coverage.md) | 日本での網羅率（道路統計年報・国土数値情報 N13 との比較） |
 

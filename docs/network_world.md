@@ -128,6 +128,8 @@ class の付け方も違う。デリーは primary が 3,949 km（東京 11,438 
 
 ### 法定速度（legal）の当て方（`scripts/14_legal_speeds.py`）
 
+詳しい仕様は [speed.md](speed.md)。
+
 - 法定速度の表: [osm-legal-default-speeds](https://github.com/westnordost/osm-legal-default-speeds) の `legal_default_speeds.json`（元は OSM wiki「Default speed limits」、CC BY-SA 2.0）。242 の国・州
 - 道路の種類の選び方はライブラリと同じ規則。OSM のタグは Overture から作る（highway = class、一方通行 → oneway=yes。一方通行の motorway・trunk と郊外の一方通行は中央分離帯あり、一方通行の motorway・trunk は片側 2 車線とみなす）
 - 市街地か郊外か: 幹線の密度（1 km マスの周り 3×3 の延長 ÷ 9 km²）が 3 km/km² 以上なら市街地（都市の中心は 5〜16、郊外は 0〜2.8）。リンクの 28% が市街地。motorway は市街地でも郊外として引く
