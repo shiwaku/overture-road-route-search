@@ -172,8 +172,13 @@ def colorbar(fig, axes):
 
 mode = '高速道路あり' if not a.no_expressway else '高速道路なし'
 shown = 'motorway〜primary を表示' if a.major else '幹線（motorway〜tertiary）を表示'
-note = (f'Overture Maps 2026-10-21.0・{shown}・車・{mode}・{a.limit} 分・中心から ±{a.half_km:.0f} km・'
-        f'面積は届いた道路が通る {CELL_KM} km 四方のマスの合計')
+note = (f'{shown}・車・{mode}・{a.limit} 分・中心から ±{a.half_km:.0f} km・面積は届いた道路が通る {CELL_KM} km 四方のマスの合計\n'
+        '© Overture Maps Foundation（2026-10-21.0）, © OpenStreetMap contributors')
+
+
+def footnote(fig, size):
+    # supxlabel は constrained layout が下に余白を取るので、地図の枠と重ならない
+    fig.supxlabel(note, x=0.01, ha='left', fontsize=size, color='#555', linespacing=1.4)
 suffix = ('_' + '_'.join(speeds) if len(speeds) > 1 or speeds[0] != 'posted' else '') + ('_major' if a.major else '')
 out = BASE / 'docs' / 'images' / f'reach_{tag}{suffix}'
 out.mkdir(parents=True, exist_ok=True)
@@ -185,7 +190,7 @@ if len(speeds) == 1:
         fig, ax = plt.subplots(figsize=(8, 7.4), dpi=150, layout='constrained')
         draw(ax, name, sp, name)
         colorbar(fig, [ax])
-        fig.text(0.01, 0.01, note, fontsize=7, color='#555')
+        footnote(fig, 7)
         fig.savefig(out / f'{fname}.png', bbox_inches='tight')
         plt.close(fig)
     cols = 4
@@ -195,7 +200,7 @@ if len(speeds) == 1:
         draw(ax, name, sp, name, small=True)
     colorbar(fig, axes.ravel().tolist())
     fig.suptitle(f'到達圏 {a.limit} 分の比較（同じ縮尺・{SPEED_LABEL[sp]}）', fontsize=15)
-    fig.text(0.01, 0.005, note, fontsize=8, color='#555')
+    footnote(fig, 8)
     fig.savefig(out / 'all.png', bbox_inches='tight')
 else:
     # 都市ごとに速度を左から並べる。1 行に 2 都市
@@ -208,7 +213,7 @@ else:
             draw(axes.flat[n * k + j], name, sp, f'{name}（{SPEED_LABEL[sp]}）', small=True)
     colorbar(fig, axes.ravel().tolist())
     fig.suptitle(f'到達圏 {a.limit} 分：' + '｜'.join(SPEED_LABEL[sp] for sp in speeds) + '（左から）', fontsize=15)
-    fig.text(0.01, 0.003, note, fontsize=8, color='#555')
+    footnote(fig, 8)
     fig.savefig(out / 'compare.png', bbox_inches='tight')
 
     base = speeds[0]
