@@ -9,6 +9,7 @@ export interface Health {
 	status: 'ok' | 'loading' | 'error';
 	graph_loaded: boolean;
 	case?: string;
+	speed?: 'posted' | 'legal' | 'class';   // 速度の決め方（docs/speed.md）
 	links?: number;
 	nodes?: number;
 	load_seconds?: number;

@@ -11,9 +11,11 @@
 全球のネットワークは 7,424 万リンク・6,788 万ノード・1,771 万 km。到達圏 120 分は 0.2〜0.5 秒、
 大陸をまたぐ経路（リスボン→シンガポール 16,511 km）は 4.5 秒で返る。
 
-![到達圏 120 分の都市比較](docs/images/reach_120_posted_legal_class/compare.png)
+![到達圏 120 分の都市比較](docs/images/reach_120_legal/all.png)
 
-都市を比べるときは前提に注意（制限速度の入り方・道路の分類が国で違う）。左から、制限速度を使った版・制限速度の無い区間を国の法定速度で埋めた版・全都市で道路の種類ごとに同じ速度にした版。詳しくは [docs/network_world.md](docs/network_world.md#都市どうしを比べるときの前提issue-4)。
+到達圏 120 分を同じ縮尺で並べた（速度 `legal`: 制限速度が無い区間は国の法定速度。[docs/speed.md](docs/speed.md)）。
+法定速度で止まらずに走り続けた場合の上限で、実態より速い。都市を比べるときは前提に注意（制限速度の入り方・道路の分類が国で違う）。
+速度の決め方 3 通りを並べたものは [reach_120_posted_legal_class/compare.png](docs/images/reach_120_posted_legal_class/compare.png)、詳しくは [docs/network_world.md](docs/network_world.md#都市どうしを比べるときの前提issue-4)。
 
 ## 文書
 
