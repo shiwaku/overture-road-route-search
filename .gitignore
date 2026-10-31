@@ -4,3 +4,4 @@ data/
 *.pmtiles
 .venv/
 __pycache__/
+network/
