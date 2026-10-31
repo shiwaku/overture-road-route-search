@@ -16,6 +16,7 @@ from fastapi.responses import Response
 from api.graph import RoadGraph, TooManyLinks
 
 CASE = os.environ.get('ROUTE_CASE', 'jp')        # network/<case> を読む（jp・world）
+SPEED = os.environ.get('ROUTE_SPEED', 'posted')  # posted（制限速度を使う）・class（class の既定値だけ）
 LIMIT_MIN_MAX = 6000         # 分。全球では大陸を横断できるだけの上限（KSJ 版は 1,920）
 LIMIT_DIST_MAX = 5_000_000   # cost=dist のときの上限（m）
 REACH_CONCURRENCY = 2

@@ -24,6 +24,7 @@
 
 import argparse
 import shutil
+import sys
 import time
 from pathlib import Path
 
@@ -33,6 +34,9 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 import shapely
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from api.graph import SPEED_KMH, SPEED_LINK_KMH  # noqa: E402  制限速度が無い区間の速度（class ごと）
+
 RELEASE = '2026-10-21.0'
 BASE = Path(__file__).resolve().parent.parent
 INPUTS = {
@@ -40,9 +44,6 @@ INPUTS = {
     'world': sorted((BASE / 'data' / 'world' / RELEASE / 'segment').glob('*.parquet')),
 }
 CLASSES = ('motorway', 'trunk', 'primary', 'secondary', 'tertiary')
-# 制限速度が無い区間の速度 km/h（PLAN.md ②）。ランプは class ごとに別の値
-SPEED_KMH = {'motorway': 80, 'trunk': 50, 'primary': 40, 'secondary': 35, 'tertiary': 30}
-SPEED_LINK_KMH = {'motorway': 45, 'trunk': 30, 'primary': 30, 'secondary': 25, 'tertiary': 20}
 CAR_MODES = "['vehicle', 'motor_vehicle', 'car']"
 EARTH_R = 6_371_008.8
 

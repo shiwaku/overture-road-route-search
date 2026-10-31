@@ -52,9 +52,10 @@ def mem_gib():
 
 ap = argparse.ArgumentParser()
 ap.add_argument('--case', default='world')
+ap.add_argument('--speed', default='posted', help='posted・class（api/graph.py）')
 a = ap.parse_args()
 
-g = RoadGraph(a.case)
+g = RoadGraph(a.case, speed=a.speed)
 cur, peak = mem_gib()
 print(f'読み込み: {g.load_seconds:.1f} 秒（{g.source}）・メモリ {cur:.1f} GiB（最大 {peak:.1f}）', flush=True)
 h = g.health()
