@@ -5,7 +5,7 @@
 ## 目的
 
 Overture Maps の道路データ（transportation の `segment` / `connector`）から道路ネットワークを作り、
-姉妹プロジェクト `../ksj-route-search-api`（非公開）の仕組み（FastAPI ＋ scipy の in-memory グラフ ＋ SvelteKit / MapLibre / PMTiles）に載せて、
+姉妹プロジェクト [`../ksj-route-search-api`](https://github.com/shiwaku/ksj-route-search-api)の仕組み（FastAPI ＋ scipy の in-memory グラフ ＋ SvelteKit / MapLibre / PMTiles）に載せて、
 **全球の到達圏と経路探索**を実装し、ローカルで動かして検証する。
 
 参考にするもの:

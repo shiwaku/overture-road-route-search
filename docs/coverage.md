@@ -7,7 +7,7 @@
 | 比較先 | 内容 |
 |---|---|
 | 道路統計年報 2025（国土交通省道路局） | 2024-03-31 時点の実延長。表5・8・11・14（種類別）。単位は m（見出しの「Km」は誤り）。都道府県の行は政令指定都市を含まないので市の行を足し戻した（足した合計は表2の 1,231,333 km と一致） |
-| 国土数値情報 N13（道路） | 「国土数値情報（道路データ）」（国土交通省、https://nlftp.mlit.go.jp/ksj/）を GeoParquet にしたもの（非公開の姉妹プロジェクト `../ksj-route-search-api/input/geoparquet/` から読む）。2,406 万リンク・2,264,526 km |
+| 国土数値情報 N13（道路） | 「国土数値情報（道路データ）」（国土交通省、https://nlftp.mlit.go.jp/ksj/）を GeoParquet にしたもの（姉妹プロジェクト [ksj-route-search-api](https://github.com/shiwaku/ksj-route-search-api) の `../ksj-route-search-api/input/geoparquet/` から読む）。2,406 万リンク・2,264,526 km |
 
 スクリプト: `scripts/02_segment_attrs.py` → `03_coverage_stats.py`（統計）、`04_coverage_n13.py` → `05_coverage_n13_summary.py`（N13）。
 結果の表は `output/coverage/`。
