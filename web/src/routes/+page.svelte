@@ -75,7 +75,11 @@
 	// 到達圏・経路・地点のレイヤ。道路は注記（symbol）の下、経路と地点は最前面
 	function addOverlay() {
 		const m = map!;
-		m.addSource(SOURCE, { type: 'vector', url: TILES });
+		m.addSource(SOURCE, {
+			type: 'vector',
+			url: TILES,
+			attribution: '道路: © <a href="https://overturemaps.org/">Overture Maps Foundation</a>, © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+		});
 		m.addSource('route', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 		m.addSource('points', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
 		// 背景スタイルは symbol（注記）が途中にも挟まるので「最初の symbol の前」では道路・建物に被られる。

@@ -5,8 +5,8 @@
 
 - 道路は幹線だけ（motorway・trunk・primary・secondary・tertiary とそのランプ）。一方通行と制限速度を使う
 - 探索は scipy の Dijkstra（メモリ上の有向グラフ）。API は FastAPI、画面は SvelteKit ＋ MapLibre ＋ PMTiles
-- 仕組みは姉妹プロジェクト `../ksj-route-search-api`（国土数値情報 N13 版・日本全国）から移植した
-- 公開はしていない。手元の PC（64 GB）での検証まで
+- 仕組みは姉妹プロジェクト `ksj-route-search-api`（国土数値情報 N13 版・日本全国。非公開）から移植した。文書やコードのコメントにある `../ksj-route-search-api` はこのプロジェクトのこと
+- サービスとしては公開していない。手元の PC（64 GB）での検証まで
 
 全球のネットワークは 7,424 万リンク・6,788 万ノード・1,771 万 km。到達圏 120 分は 0.2〜0.5 秒、
 大陸をまたぐ経路（リスボン→シンガポール 16,511 km）は 4.5 秒で返る。
@@ -64,6 +64,22 @@ uv run python scripts/11_make_pmtiles.py --case world --wsl
 
 `data/`・`network/`・`*.pmtiles` は git に入れない。
 
+## 図の作り直し（`docs/images/`）
+
+`scripts/13_reach_maps.py` で作る。まず速度ごとに API を起動して到達圏を問い合わせ（`fetch`、`network/world/reach/` に保存）、それから描く（`draw`）。
+
+```sh
+# 速度ごとに: API を ROUTE_SPEED=<速度> で起動してから
+uv run python scripts/13_reach_maps.py fetch --speed posted   # legal・class も同じ
+
+D="uv run python scripts/13_reach_maps.py draw"
+$D --speeds legal --half-km 300 --ring-km 150                 # reach_120_legal/（README の図 all.png）
+$D --speeds legal --half-km 300 --ring-km 150 --major         # reach_120_legal_major/
+$D --speeds posted --half-km 250                              # reach_120/
+$D --speeds posted --half-km 300 --ring-km 150 --major        # reach_120_major/
+$D --speeds posted,legal,class --half-km 300 --ring-km 150    # reach_120_posted_legal_class/（compare.png・stats.md）
+```
+
 ## ローカルで動かす
 
 1. API（ポート 8010）。`ROUTE_CASE` で読むネットワークを選ぶ（既定は jp）
@@ -93,4 +109,11 @@ API: `GET /health`、`GET /reachability?lat=&lon=&limit_min=&use_expressway=`、
 
 - 道路: © [Overture Maps Foundation](https://overturemaps.org/)（transportation テーマ、リリース 2026-10-21.0）。元の多くは © OpenStreetMap contributors（ODbL）
 - 法定速度: [osm-legal-default-speeds](https://github.com/westnordost/osm-legal-default-speeds)（元は OSM wiki「Default speed limits」、CC BY-SA 2.0）。`data/legal_speeds/` に置く
-- 背景地図（画面）: [OpenFreeMap](https://openfreemap.org/)
+- 背景地図（画面）: [OpenFreeMap](https://openfreemap.org/)（© OpenMapTiles、© OpenStreetMap contributors）
+- 網羅率の検証（`docs/coverage.md`）:
+  - 「国土数値情報（道路データ N13）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/）を加工して作成
+  - 「道路統計年報 2025」（国土交通省道路局）
+
+## ライセンス
+
+コードは [MIT](LICENSE)。データ（Overture・OpenStreetMap・国土数値情報など）と、それから作った図・表はそれぞれの元データのライセンスに従う（上の「データの出典」）。

@@ -5,7 +5,7 @@
 ## 目的
 
 Overture Maps の道路データ（transportation の `segment` / `connector`）から道路ネットワークを作り、
-姉妹プロジェクト `../ksj-route-search-api` の仕組み（FastAPI ＋ scipy の in-memory グラフ ＋ SvelteKit / MapLibre / PMTiles）に載せて、
+姉妹プロジェクト `../ksj-route-search-api`（非公開）の仕組み（FastAPI ＋ scipy の in-memory グラフ ＋ SvelteKit / MapLibre / PMTiles）に載せて、
 **全球の到達圏と経路探索**を実装し、ローカルで動かして検証する。
 
 参考にするもの:
@@ -22,7 +22,7 @@ Overture Maps の道路データ（transportation の `segment` / `connector`）
 | 移動手段 | 車・徒歩・自転車 | 車のみ |
 | 道路 | すべて | 幹線だけ（下の表） |
 | エンジン | pgRouting・SciPy・OSRM・GraphHopper・Valhalla | SciPy（ksj-route-search-api と同じ）。ほかのエンジンとの比較はしない |
-| 公開 | — | しない（ローカルでの検証まで） |
+| 公開 | — | サービスとしては公開しない（ローカルでの検証まで）。リポジトリ（コード）は MIT で公開 |
 
 段階 1・2（日本の取得と網羅率）はそのまま残す。結果は `docs/coverage.md`。
 
@@ -36,7 +36,7 @@ Overture Maps の道路データ（transportation の `segment` / `connector`）
 | 一方通行 | 考慮する（KSJ 版には無かった。`access_restrictions` の heading 付き denied） |
 | コードの置き場所 | このリポジトリ。ksj-route-search-api の api / web は参照して移植する（ksj-route-search-api 側は変えない） |
 | 検証の環境 | このマシン（RAM 64 GB・空きディスク 約 600 GB） |
-| 管理 | git。GitHub の非公開リポジトリ shiwaku/overture-road-route-search |
+| 管理 | git。GitHub の shiwaku/overture-road-route-search（MIT） |
 
 ## 段階
 
