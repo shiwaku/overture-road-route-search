@@ -11,6 +11,7 @@
 	// static/tiles/roads.pmtiles は network/<case>/roads_<case>.pmtiles へのハードリンク（README）
 	const TILES = `pmtiles://${location.origin}/tiles/roads.pmtiles`;
 	const LIMITS = [15, 30, 60, 120, 240, 480, 720, 1200, 1920, 2880, 4320, 6000];
+	const SPEED_LABEL = { posted: '制限速度', legal: '無い区間は法定速度', class: '道路の種類ごとの同じ速度' };
 
 	type LatLon = { lat: number; lon: number };
 
@@ -334,7 +335,7 @@
 			{:else}
 			<p class="mt-1 text-xs text-gray-600">
 				{#if ready}
-					<span class="text-green-700">● API 準備完了</span> — {health!.case} / {fmt(health!.links!)} リンク / 起動 {health!.load_seconds}s
+					<span class="text-green-700">● API 準備完了</span> — {health!.case} / 速度 {SPEED_LABEL[health!.speed ?? 'posted']} / {fmt(health!.links!)} リンク / 起動 {health!.load_seconds}s
 				{:else if health?.status === 'error'}
 					<span class="text-red-700">● API エラー: {health.error}</span>
 				{:else}
