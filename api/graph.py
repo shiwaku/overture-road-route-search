@@ -129,7 +129,9 @@ class RoadGraph:
             self._build(d)
             self.source = 'parquet'
         gid = d / 'link_gid.npy'
-        self.link_gid = np.load(gid, mmap_mode='r') if gid.exists() else None   # 大陸ごとに分けた台だけ
+        # 大陸ごとに分けた台だけ。メモリに読み込む（メモリマップだと本番のコンテナでは到達圏 79 万リンクの引き当てに
+        # 1.2 秒かかった。2026-11-02、issue #14）
+        self.link_gid = np.load(gid) if gid.exists() else None
         self._finish()
         self.load_seconds = time.perf_counter() - t0
 
