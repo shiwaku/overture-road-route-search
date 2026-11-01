@@ -113,7 +113,9 @@ Access は Cloudflare の手前で効くので、ログインしていない人�
 1. Workers & Pages → `overture-road-route-search` → **Access** タブ → **Protect this Worker behind Access**
 2. **All traffic** を選ぶ（Previews only だと本番の URL は守られない）
 3. **Authentication policy** で **Emails** に `shiwaku@mierune.co.jp` を入れて **Apply Access**
-4. ログイン方法は **One-time PIN** だけにする（Zero Trust → ID プロバイダーに One-time PIN を足し、アプリケーションの「認証」で One-time PIN だけを選んで「インスタント認証を適用」）
+4. ログイン方法は **One-time PIN** だけにする（Zero Trust → ID プロバイダーに One-time PIN を足し、アプリケーションの「認証」で One-time PIN だけを選んで「インスタント認証を適用」）。
+   「Protect this Worker behind Access」で作ったアプリは、One-time PIN にチェックが入っていないことがある。そのままだとログイン画面は出るが、コードのメールが送られない
+   （アプリケーション一覧の「…」→ 編集 → ログイン方法で確かめる）
 
 確認: シークレットウィンドウで開くとログイン画面になり、ほかのアドレスではコードが届かない。
 
