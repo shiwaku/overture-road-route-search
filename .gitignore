@@ -14,3 +14,7 @@ docs/images/reach_120_legal/all_pop50.jpg
 docs/images/reach_120_legal/all_pop50_en.jpg
 docs/images/reach_120_legal/all_pop100.jpg
 docs/images/reach_120_legal/all_pop100_en.jpg
+# 公開版（deploy/cloudflare）
+deploy/cloudflare/node_modules/
+deploy/cloudflare/.wrangler/
+deploy/cloudflare/src/shard_grid.bin

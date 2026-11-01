@@ -339,7 +339,7 @@
 			{:else}
 			<p class="mt-1 text-xs text-gray-600">
 				{#if ready}
-					<span class="text-green-700">● API 準備完了</span> — {health!.case} / 速度 {SPEED_LABEL[health!.speed ?? 'posted']} / {fmt(health!.links!)} リンク / 起動 {health!.load_seconds}s
+					<span class="text-green-700">● API 準備完了</span> — {health!.case} / 速度 {SPEED_LABEL[health!.speed ?? 'posted']} / {fmt(health!.links!)} リンク / {health!.load_seconds != null ? `起動 ${health!.load_seconds}s` : '初回の検索は 1 分ほどかかることがあります'}
 				{:else if health?.status === 'error'}
 					<span class="text-red-700">● API エラー: {health.error}</span>
 				{:else}

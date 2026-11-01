@@ -1,0 +1,12 @@
+# 許可リスト: 公開版の API イメージ（deploy/cloudflare/Dockerfile.*）に要るものだけ送る。
+# network/ には全球のグラフ・parquet（数十 GB）があるので、大陸ごとの組み立て済みグラフだけ通す
+*
+!deploy/cloudflare/requirements-api.txt
+!api/
+!network/world_eurasia/graph_legal/
+!network/world_eurasia/link_gid.npy
+!network/world_americas/graph_legal/
+!network/world_americas/link_gid.npy
+!network/world_other/graph_legal/
+!network/world_other/link_gid.npy
+**/__pycache__

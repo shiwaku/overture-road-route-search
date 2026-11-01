@@ -1,0 +1,23 @@
+# 公開版（Cloudflare Containers）の API イメージ: other の台（issue #9 の A 案）。3 台とも中身は同じで、焼き込むグラフだけが違う。
+# ビルドコンテキストはリポジトリ直下（wrangler.jsonc の image_build_context）。ignore はルートの .dockerignore（許可リスト）。
+# グラフは scripts/16_split_world.py → scripts/10_build_graph_arrays.py --case world_other --speed legal で作る。
+# parquet は入れない（組み立て済みの配列を読むだけ）。link_gid.npy は全球の link_id に直すため（api/graph.py）
+FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+
+WORKDIR /app
+ENV PYTHONUNBUFFERED=1 UV_COMPILE_BYTECODE=1
+# glibc はスレッドごとにメモリ領域（arena）を作り、解放しても手放さない。探索はスレッドプールで回るので絞る
+ENV MALLOC_ARENA_MAX=2
+ENV ROUTE_CASE=world_other ROUTE_SPEED=legal
+
+# 依存は API が使うものだけ（requirements-api.txt）。プロジェクト全体の依存（分析用）を入れるとイメージが 3 GB 増える。
+# レイヤは変わりにくい順: 依存 → グラフ → コード。コードだけ直したときは小さいレイヤしか上がらない
+COPY deploy/cloudflare/requirements-api.txt ./
+RUN uv pip install --system --no-cache -r requirements-api.txt
+
+COPY network/world_other/graph_legal/ network/world_other/graph_legal/
+COPY network/world_other/link_gid.npy network/world_other/link_gid.npy
+COPY api ./api
+
+EXPOSE 8000
+CMD ["python", "-m", "uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
