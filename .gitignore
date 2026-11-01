@@ -5,3 +5,12 @@ data/
 .venv/
 __pycache__/
 network/
+# 到達圏の一覧の原寸（35〜94 MB）。git には X 用の *_x.jpg だけ入れる
+docs/images/reach_120_legal/all_world50*.png
+docs/images/reach_120_legal/all_pop*.png
+docs/images/reach_120_legal/all_world50.jpg
+docs/images/reach_120_legal/all_world50_en.jpg
+docs/images/reach_120_legal/all_pop50.jpg
+docs/images/reach_120_legal/all_pop50_en.jpg
+docs/images/reach_120_legal/all_pop100.jpg
+docs/images/reach_120_legal/all_pop100_en.jpg
