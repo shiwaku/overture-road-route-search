@@ -80,6 +80,21 @@ $D --speeds posted --half-km 300 --ring-km 150 --major        # reach_120_major/
 $D --speeds posted,legal,class --half-km 300 --ring-km 150    # reach_120_posted_legal_class/（compare.png・stats.md）
 ```
 
+### 多くの都市を並べた一覧（`reach_120_legal/all_pop50_x.jpg` など）
+
+人口の上位の都市を、届く面積の大きい順に並べる。都市は `scripts/15_city_list.py` が Natural Earth の人口（POP_MAX）から選ぶ（`scripts/cities_pop100.csv`。人口が行政区域の値の都市と、別の都市の都市圏に含まれる都市は除いて `cities_pop100_excluded.csv` に記録）。
+
+```sh
+uv run python scripts/15_city_list.py                       # Natural Earth を data/raw/naturalearth_populated_places/ に展開しておく
+uv run python scripts/13_reach_maps.py fetch --speed legal --cities pop100 --skip-existing   # API は ROUTE_SPEED=legal
+E="$D --speeds legal --half-km 300 --ring-km 150 --sort-area --no-each --cols 10 --dpi 300"
+$E --cities pop100 --top 50 [--lang en]                      # all_pop50.png（英語は all_pop50_en.png）
+$E --cities pop100 [--lang en]                               # all_pop100.png
+$E --cities world50 [--lang en]                              # all_world50.png（大陸の偏りが出ないように選んだ 50 都市）
+```
+
+原寸（300 dpi・35〜94 MB）は git に入れない。入れるのは長辺 4096 px に縮めた `*_x.jpg`（X に載せる大きさ）。1 都市だけ描くときは `--cities edmonton` のように名前を渡す（`edmonton.png`・`compare_edmonton.png`）。
+
 ## ローカルで動かす
 
 1. API（ポート 8010）。`ROUTE_CASE` で読むネットワークを選ぶ（既定は jp）
@@ -109,6 +124,7 @@ API: `GET /health`、`GET /reachability?lat=&lon=&limit_min=&use_expressway=`、
 
 - 道路: © [Overture Maps Foundation](https://overturemaps.org/)（transportation テーマ、リリース 2026-10-21.0）。元の多くは © OpenStreetMap contributors（ODbL）
 - 法定速度: [osm-legal-default-speeds](https://github.com/westnordost/osm-legal-default-speeds)（元は OSM wiki「Default speed limits」、CC BY-SA 2.0）。`data/legal_speeds/` に置く
+- 都市の人口と位置（到達圏の一覧）: [Natural Earth](https://www.naturalearthdata.com/)（populated places 1:10m、v5.1.2、パブリックドメイン）
 - 背景地図（画面）: [OpenFreeMap](https://openfreemap.org/)（© OpenMapTiles、© OpenStreetMap contributors）
 - 網羅率の検証（`docs/coverage.md`）:
   - 「国土数値情報（道路データ N13）」（国土交通省）（https://nlftp.mlit.go.jp/ksj/）を加工して作成

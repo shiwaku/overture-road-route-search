@@ -1,0 +1,101 @@
+rank,name_ja,name_en,fname,country,pop_max,lat,lon
+1,東京,Tokyo,tokyo,Japan,35676000,35.686963,139.749462
+2,ニューヨーク,New York,new_york,United States of America,19040000,40.751925,-73.981963
+3,メキシコシティ,Mexico City,mexico_city,Mexico,19028000,19.444388,-99.132934
+4,ムンバイ,Mumbai,mumbai,India,18978000,19.018936,72.855043
+5,サンパウロ,São Paulo,sao_paulo,Brazil,18845000,-23.556734,-46.626966
+6,デリー,Delhi,delhi,India,15926000,28.671939,77.228058
+7,上海,Shanghai,shanghai,China,14987000,31.218398,121.434559
+8,コルカタ,Kolkata,kolkata,India,14787000,22.496915,88.32273
+9,ダッカ,Dhaka,dhaka,Bangladesh,12797394,23.725006,90.406634
+10,ブエノスアイレス,Buenos Aires,buenos_aires,Argentina,12795000,-34.600556,-58.399477
+11,ロサンゼルス,Los Angeles,los_angeles,United States of America,12500000,33.991924,-118.181926
+12,カラチ,Karachi,karachi,Pakistan,12130000,24.871938,66.988063
+13,カイロ,Cairo,cairo,Egypt,11893000,30.051906,31.248022
+14,リオデジャネイロ,Rio de Janeiro,rio_de_janeiro,Brazil,11748000,-22.923077,-43.226967
+15,大阪,Osaka,osaka,Japan,11294000,34.751981,135.458199
+16,北京,Beijing,beijing,China,11106000,39.930838,116.38634
+17,マニラ,Manila,manila,Philippines,11100000,14.606105,120.980271
+18,モスクワ,Moscow,moscow,Russia,10452000,55.75411,37.613577
+19,イスタンブール,Istanbul,istanbul,Turkey,10061000,41.106942,29.008056
+20,パリ,Paris,paris,France,9904000,48.868639,2.33139
+21,ソウル,Seoul,seoul,South Korea,9796000,37.568295,126.997785
+22,ラゴス,Lagos,lagos,Nigeria,9466000,6.445208,3.389585
+23,ジャカルタ,Jakarta,jakarta,Indonesia,9125000,-6.172472,106.827492
+24,シカゴ,Chicago,chicago,United States of America,8990000,41.831937,-87.752001
+25,広州,Guangzhou,guangzhou,China,8829000,23.146927,113.323064
+26,ロンドン,London,london,United Kingdom,8567000,51.501941,-0.118668
+27,リマ,Lima,lima,Peru,8012000,-12.046067,-77.052008
+28,テヘラン,Tehran,tehran,Iran,7873000,35.673889,51.422398
+29,キンシャサ,Kinshasa,kinshasa,Congo (Kinshasa),7843000,-4.327778,15.313026
+30,ボゴタ,Bogota,bogota,Colombia,7772000,4.598369,-74.08529
+31,深圳,Shenzhen,shenzhen,China,7581000,22.554316,114.120177
+32,武漢,Wuhan,wuhan,China,7243000,30.581977,114.268071
+33,香港,Hong Kong,hong_kong,Hong Kong S.A.R.,7206000,22.306927,114.183064
+34,天津,Tianjin,tianjin,China,7180000,39.131972,117.198073
+35,チェンナイ,Chennai,chennai,India,7163000,13.091934,80.278053
+36,台北,Taipei,taipei,Taiwan,6900273,25.035833,121.568333
+37,バンガロール,Bengaluru,bengaluru,India,6787000,12.971941,77.558064
+38,バンコク,Bangkok,bangkok,Thailand,6704000,13.751945,100.514699
+39,ラホール,Lahore,lahore,Pakistan,6577000,31.561917,74.348079
+40,重慶,Chongqing,chongqing,China,6461000,29.566923,106.593036
+41,ハイデラバード,Hyderabad,hyderabad,India,6376000,17.401929,78.478008
+42,サンティアゴ,Santiago,santiago,Chile,5720000,-33.448068,-70.668987
+43,マイアミ,Miami,miami,United States of America,5585000,25.789557,-80.226052
+44,ベロオリゾンテ,Belo Horizonte,belo_horizonte,Brazil,5575000,-19.91308,-43.91695
+45,マドリード,Madrid,madrid,Spain,5567000,40.401972,-3.685298
+46,フィラデルフィア,Philadelphia,philadelphia,United States of America,5492000,40.001919,-75.171942
+47,アフマダーバード,Ahmedabad,ahmedabad,India,5375000,23.031999,72.578058
+48,ホーチミン,Ho Chi Minh City,ho_chi_minh_city,Vietnam,5314000,10.781971,106.693081
+49,トロント,Toronto,toronto,Canada,5213000,43.701926,-79.421967
+50,シンガポール,Singapore,singapore,Singapore,5183700,1.294979,103.853875
+51,ルアンダ,Luanda,luanda,Angola,5172900,-8.83634,13.232481
+52,バグダード,Baghdad,baghdad,Iraq,5054000,33.340594,44.391923
+53,バルセロナ,Barcelona,barcelona,Spain,4920000,41.385245,2.181425
+54,ダラス,Dallas,dallas,United States of America,4798000,32.82197,-96.841963
+55,瀋陽,Shenyang,shenyang,China,4787000,41.806925,123.448028
+56,ハルツーム,Khartoum,khartoum,Sudan,4754000,15.590024,32.532233
+57,プネー,Pune,pune,India,4672000,18.531963,73.848058
+58,シドニー,Sydney,sydney,Australia,4630000,-33.918065,151.183234
+59,サンクトペテルブルク,St. Petersburg,st_petersburg,Russia,4553000,59.94096,30.314074
+60,チッタゴン,Chattogram,chattogram,Bangladesh,4529000,22.331938,91.798022
+61,東莞,Dongguan,dongguan,China,4528000,23.050835,113.742776
+62,アトランタ,Atlanta,atlanta,United States of America,4506000,33.83196,-84.401895
+63,ボストン,Boston,boston,United States of America,4467000,42.331906,-71.07196
+64,リヤド,Riyadh,riyadh,Saudi Arabia,4465000,24.642779,46.770796
+65,ヒューストン,Houston,houston,United States of America,4459000,29.82192,-95.341925
+66,ハノイ,Hanoi,hanoi,Vietnam,4378000,21.035273,105.848068
+67,ワシントンD.C.,"Washington, D.C.",washington_d_c,United States of America,4338000,38.901495,-77.011364
+68,グアダラハラ,Guadalajara,guadalajara,Mexico,4198000,20.671962,-103.33198
+69,メルボルン,Melbourne,melbourne,Australia,4170000,-37.818086,144.97307
+70,アレクサンドリア,Alexandria,alexandria,Egypt,4165000,31.201965,29.94805
+71,成都,Chengdu,chengdu,China,4123000,30.671946,104.068074
+72,デトロイト,Detroit,detroit,United States of America,4101000,42.331906,-83.082002
+73,ヤンゴン,Yangon,yangon,Myanmar,4088000,16.7853,96.164732
+74,西安,Xian,xian,China,4009000,34.276971,108.89305
+75,ポルト・アレグレ,Porto Alegre,porto_alegre,Brazil,3917000,-30.048069,-51.201958
+76,スーラト,Surat,surat,India,3842000,21.20193,72.838094
+77,アビジャン,Abidjan,abidjan,Ivory Coast,3802000,5.321943,-4.041994
+78,ブラジリア,Brasília,brasilia,Brazil,3716996,-15.781394,-47.917998
+79,アンカラ,Ankara,ankara,Turkey,3716000,39.929184,32.862446
+80,モンテレイ,Monterrey,monterrey,Mexico,3712000,25.671941,-100.331931
+81,南京,Nanjing,nanjing,China,3679000,32.051965,118.778029
+82,モントリオール,Montréal,montreal,Canada,3678000,45.501945,-73.585243
+83,貴陽,Guiyang,guiyang,China,3662000,26.581989,106.718093
+84,レシフェ,Recife,recife,Brazil,3651000,-8.0737,-34.917551
+85,ハルビン,Harbin,harbin,China,3621000,45.75193,126.648039
+86,フォルタレザ,Fortaleza,fortaleza,Brazil,3602319,-3.748072,-38.581927
+87,ウルムチ,Ürümqi,urumqi,China,3575000,43.806958,87.57306
+88,フェニックス,Phoenix,phoenix,United States of America,3551000,33.541926,-112.071938
+89,サルヴァドール,Salvador,salvador,Brazil,3484000,-12.968026,-38.481933
+90,釜山,Busan,busan,South Korea,3480000,35.096999,129.008102
+91,サンフランシスコ,San Francisco,san_francisco,United States of America,3450000,37.769196,-122.417169
+92,ヨハネスブルグ,Johannesburg,johannesburg,South Africa,3435000,-26.168099,28.028064
+93,ベルリン,Berlin,berlin,Germany,3406000,52.523765,13.399603
+94,アルジェ,Algiers,algiers,Algeria,3354000,36.765011,3.048607
+95,ローマ,Rome,rome,Italy,3339000,41.897902,12.481313
+96,平壌,Pyongyang,pyongyang,North Korea,3300000,39.021385,125.752745
+97,メデジン,Medellín,medellin,Colombia,3297000,6.276949,-75.576956
+98,カーブル,Kabul,kabul,Afghanistan,3277000,34.518636,69.181314
+99,アテネ,Athens,athens,Greece,3242000,37.985272,23.731375
+100,名古屋,Nagoya,nagoya,Japan,3230000,35.156943,136.913046
