@@ -313,7 +313,12 @@ class RoadGraph:
         reached = np.flatnonzero(np.isfinite(d))
         t_dijkstra = time.perf_counter() - t0
         # 到達したノードから出るリンク: node1 側から順方向、node2 側から逆方向
-        cand = np.union1d(_ranges(self.ptr1, reached), self.by2[_ranges(self.ptr2, reached)])
+        # 重なりを除いて昇順に。np.union1d（並べ替え）だと 79 万リンクで 0.2 秒かかり、本番の 1/2 vCPU では
+        # 1 秒近くになったので、リンク数の長さの印を付けて拾う（2026-11-02、issue #14）
+        mark = np.zeros(self.n_links, dtype=bool)
+        mark[_ranges(self.ptr1, reached)] = True
+        mark[self.by2[_ranges(self.ptr2, reached)]] = True
+        cand = np.flatnonzero(mark)
         c1 = np.where(self.fwd[cand], d[self.i1[cand]], np.inf)
         c2 = np.where(self.bwd[cand], d[self.i2[cand]], np.inf)
         c = np.minimum(c1, c2)
