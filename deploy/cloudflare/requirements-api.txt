@@ -1,0 +1,7 @@
+# 公開版の API イメージに入れるもの（deploy/cloudflare/Dockerfile.*）。版は uv.lock と同じ。
+# 組み立て済みのグラフを読むだけなので、pandas・pyarrow・geopandas・duckdb（組み立て・分析用）は要らない
+fastapi==0.162.0
+uvicorn==0.54.0
+orjson==3.13.0
+numpy==2.5.4
+scipy==1.18.1

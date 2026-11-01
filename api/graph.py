@@ -22,6 +22,8 @@
 
 【link_id は links.parquet の行番号】（KSJ 版と同じ約束）
 links.parquet は node1 の順に並んでいる（scripts/09_build_network.py）。node_id は nodes.parquet の行番号。
+大陸ごとに分けたネットワーク（network/world_<名前>、scripts/16_split_world.py）は link_gid.npy（その台の link_id →
+全球の link_id、増加列）を持つ。画面の道路タイルは全球の link_id なので、到達圏と経路の link_ids は全球の番号で返す。
 """
 
 import json
@@ -126,6 +128,8 @@ class RoadGraph:
         else:
             self._build(d)
             self.source = 'parquet'
+        gid = d / 'link_gid.npy'
+        self.link_gid = np.load(gid, mmap_mode='r') if gid.exists() else None   # 大陸ごとに分けた台だけ
         self._finish()
         self.load_seconds = time.perf_counter() - t0
 
@@ -328,7 +332,7 @@ class RoadGraph:
             keep = self.class_masks[applied][cand]
             cand, c = cand[keep], c[keep]
         return {
-            'link_ids': cand.astype(np.int64),
+            'link_ids': self.global_ids(cand),
             'costs': c,
             'snap': (slat, slon, sm),
             'road_class_applied': applied,
@@ -401,13 +405,18 @@ class RoadGraph:
         fwd = self.i1[link_ids] == np.asarray(path[:-1])
         time_min = np.where(fwd, self.link_time_fwd[link_ids], self.link_time_bwd[link_ids]).sum()
         base.update(
-            coordinates=coords, link_ids=link_ids, unreachable_reason=None,
+            coordinates=coords, link_ids=self.global_ids(link_ids), unreachable_reason=None,
             summary={'dist_m': int(round(self.link_dist[link_ids].sum())),
                      'time_min': round(float(time_min), 1),
                      'link_count': int(len(link_ids)),
                      'nodes_searched': int(np.isfinite(d).sum()), 'tries': tries},
             elapsed_ms=(time.perf_counter() - t0) * 1000)
         return base
+
+    def global_ids(self, ids):
+        """その台の link_id → 全球の link_id（分けていないネットワークならそのまま）"""
+        ids = np.asarray(ids, dtype=np.int64)
+        return ids if self.link_gid is None else np.asarray(self.link_gid[ids], dtype=np.int64)
 
     @staticmethod
     def _great_circle_m(lat1, lon1, lat2, lon2):
