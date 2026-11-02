@@ -38,21 +38,21 @@
     {
       // 常駐 9.6 GiB・グラフ 8.9 GiB → 4 vCPU・12 GiB・20 GB disk
       "class_name": "EurasiaContainer",
-      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-eurasiacontainer:f3bb31e5",
+      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-eurasiacontainer:6c712a3",
       "instance_type": "standard-4",
       "max_instances": 1
     },
     {
       // 常駐 5.1 GiB・グラフ 4.5 GiB。standard-2（6 GiB）は余裕が 0.9 GiB しかないので 1 つ上
       "class_name": "AmericasContainer",
-      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-americascontainer:f3bb31e5",
+      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-americascontainer:6c712a3",
       "instance_type": "standard-3",
       "max_instances": 1
     },
     {
       // 常駐 2.3 GiB・グラフ 2.0 GiB → 1/2 vCPU・4 GiB
       "class_name": "OtherContainer",
-      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-othercontainer:f3bb31e5",
+      "image": "registry.cloudflare.com/993e6751b27bc08e37b6b6e0e601587b/overture-road-route-search-othercontainer:7ab3606",
       "instance_type": "standard-1",
       "max_instances": 1
     }
