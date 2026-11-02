@@ -73,7 +73,7 @@ uv run python scripts/11_make_pmtiles.py --case world --wsl
 uv run python scripts/13_reach_maps.py fetch --speed posted   # legal・class も同じ
 
 D="uv run python scripts/13_reach_maps.py draw"
-$D --speeds legal --half-km 300 --ring-km 150                 # reach_120_legal/（README の図 all.png）
+$D --speeds legal --half-km 300 --ring-km 150 [--lang en]     # reach_120_legal/（README の図 all.png。英語は all_en.png）
 $D --speeds legal --half-km 300 --ring-km 150 --major         # reach_120_legal_major/
 $D --speeds posted --half-km 250                              # reach_120/
 $D --speeds posted --half-km 300 --ring-km 150 --major        # reach_120_major/
